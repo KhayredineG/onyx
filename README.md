@@ -18,7 +18,7 @@ Onyx is a sophisticated prompt management utility designed for developers and pr
 
 - **Framework**: [Next.js](https://nextjs.org) (App Router)
 - **Styling**: Tailwind CSS & Framer Motion (for smooth, glitch-inspired animations)
-- **Database**: Drizzle ORM with LibSQL (Local SQLite)
+- **Database**: [Drizzle ORM](https://orm.drizzle.team) with [LibSQL](https://turso.tech) (Turso)
 - **Icons**: Lucide React
 - **State Management**: Zustand
 
@@ -38,13 +38,20 @@ cd onyx
 bun install
 ```
 
-### 3. Local Setup
+### 3. Database Setup
 
-Copy the environment variables and run migrations if necessary (Onyx uses a local SQLite database).
+Copy the environment variables and configure your Turso database.
 
 ```bash
 cp .env.example .env.local
-# Onyx automatically handles local DB initialization
+```
+
+Login to [Turso](https://turso.tech) and create a new database to get your `DATABASE_URL` and `DATABASE_AUTH_TOKEN`. Add these to your `.env.local`.
+
+Run the migrations to set up your schema:
+
+```bash
+bun x drizzle-kit push
 ```
 
 ### 4. Deployment
