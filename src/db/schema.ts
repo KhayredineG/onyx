@@ -5,6 +5,8 @@ export const prompts = sqliteTable("prompts", {
     id: integer("id").primaryKey({ autoIncrement: true }),
     title: text("title").notNull(),
     content: text("content").notNull(),
+    author: text("author").default("System"),
+    isArchived: integer("is_archived", { mode: "boolean" }).default(false),
     createdAt: integer("created_at", { mode: "timestamp" }).default(sql`CURRENT_TIMESTAMP`),
     updatedAt: integer("updated_at", { mode: "timestamp" }).default(sql`CURRENT_TIMESTAMP`),
 });

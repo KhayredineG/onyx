@@ -6,6 +6,9 @@ interface Prompt {
     content: string;
     createdAt: Date;
     updatedAt: Date;
+    tags?: string[];
+    author?: string | null;
+    isArchived: boolean;
 }
 
 interface OnyxState {
