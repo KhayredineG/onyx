@@ -62,7 +62,7 @@ export default function Home() {
     toast.promise(promise, {
       loading: "Committing protocol...",
       success: "Protocol committed to secure storage.",
-      error: "Commit failed.",
+      error: (data: any) => `Commit failed: ${data.message || "Unknown error"}`,
     });
 
     await promise;

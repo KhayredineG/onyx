@@ -41,22 +41,31 @@ export async function createPrompt(title: string, content: string, author: strin
 }
 
 export async function updatePrompt(id: number, content: string, title?: string, author?: string) {
-    const updates: any = { content, updatedAt: new Date() };
-    if (title) updates.title = title;
-    if (author) updates.author = author;
+    try {
+        const updates: any = { content, updatedAt: new Date() };
+        if (title) updates.title = title;
+        if (author) updates.author = author;
 
-    const [updated] = await db.update(prompts)
-        .set(updates)
-        .where(eq(prompts.id, id))
-        .returning();
+        const [updated] = await db.update(prompts)
+            .set(updates)
+            .where(eq(prompts.id, id))
+            .returning();
 
-    await db.insert(promptVersions).values({
-        promptId: id,
-        snapshotContent: content,
-    });
+        if (!updated) {
+            throw new Error("Prompt not found or update failed");
+        }
 
-    revalidatePath("/");
-    return updated;
+        await db.insert(promptVersions).values({
+            promptId: id,
+            snapshotContent: content,
+        });
+
+        revalidatePath("/");
+        return updated;
+    } catch (error) {
+        console.error("Failed to update prompt:", error);
+        throw error;
+    }
 }
 
 export async function deletePrompt(id: number) {
