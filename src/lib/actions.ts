@@ -61,10 +61,10 @@ export async function updatePrompt(id: number, content: string, title?: string, 
         });
 
         revalidatePath("/");
-        return updated;
-    } catch (error) {
+        return { success: true, data: updated };
+    } catch (error: any) {
         console.error("Failed to update prompt:", error);
-        throw error;
+        return { success: false, error: error.message };
     }
 }
 
