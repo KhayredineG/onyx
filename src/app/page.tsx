@@ -57,7 +57,7 @@ export default function Home() {
 
   const handleSave = async () => {
     if (!activePrompt) return;
-    const promise = updatePrompt(activePrompt.id, activePrompt.content, activePrompt.title, activePrompt.author);
+    const promise = updatePrompt(activePrompt.id, activePrompt.content, activePrompt.title, activePrompt.author || undefined);
 
     toast.promise(promise, {
       loading: "Committing protocol...",
